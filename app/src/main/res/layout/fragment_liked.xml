@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".liked.LikedFragment">
+    <TextView
+        android:text="Favorites"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textStyle="bold|normal"
+        android:textSize="16sp"
+        android:background="@color/black">
+    </TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favoritesReyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="637dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <ImageButton
+            android:src="@drawable/music_note"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:layout_weight="1">
+
+        </ImageButton>
+
+        <ImageButton
+            android:src="@drawable/like"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="80dp">
+
+        </ImageButton>
+    </LinearLayout>
+
+</LinearLayout>

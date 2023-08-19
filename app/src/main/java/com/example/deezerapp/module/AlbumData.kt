@@ -1,6 +1,6 @@
 package com.example.deezerapp.module
 
-data class AlbumsResponse(val data: List<AlbumData>?)
+data class AlbumsResponse(var data: List<AlbumData>?)
 data class AlbumData(
     val id: Int,
     val name: String,

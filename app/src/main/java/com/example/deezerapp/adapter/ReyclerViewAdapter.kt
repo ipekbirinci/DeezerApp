@@ -1,71 +1,57 @@
-package com.example.deezerapp.adapter
+package com.example.deezerapirequest
 
-/*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.deezerapp.R
+import com.example.deezerapp.module.GenreData
 
-class ReyclerViewAdapter(
-    private val noteList: List<Note>,
-    private val clickListener: RowClickListener<Note>
-) : RecyclerView.Adapter<NoteAdapter.ViewHolder>(), Filterable {
+class ReyclerViewAdapter(private val genres: List<GenreData>) : RecyclerView.Adapter<ReyclerViewAdapter.GenreViewHolder>() {
 
-    private var noteFilterList = noteList.toMutableList()
+    private var onItemClickListener: OnItemClickListener? = null
 
-    class ViewHolder(val binding: CardViewBinding) : RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding: CardViewBinding =
-            DataBindingUtil.inflate(inflater, R.layout.card_view, parent, false)
-        return ViewHolder(binding)
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        onItemClickListener = listener
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentNote = noteFilterList[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_view, parent, false)
+        return GenreViewHolder(view)
+    }
 
-        holder.binding.noteTitle.text = currentNote.title
-        holder.binding.noteContext.text = currentNote.context
-
-        holder.binding.deleteCard.setOnClickListener {
-            clickListener.onRowDeleteClick(position, currentNote)
-            Log.d("asd", "${currentNote.id}")
-        }
-
-        holder.binding.cardCell.setOnClickListener {
-            clickListener.onRowClick(position, currentNote)
+    override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
+        val genre = genres[position]
+        holder.bind(genre)
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.onItemClick(genre)
         }
     }
 
-    override fun getItemCount(): Int = noteFilterList.size
+    override fun getItemCount(): Int = genres.size
 
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
-                //Aranan yazı
-                val charSearch = constraint.toString()
-                //Arama alanında bir yazı aranmadıysa tüm notları noteFilterList'e aktarıyoruz
-                if (charSearch.isEmpty()) {
-                    noteFilterList = noteList.toMutableList()
-                } else {
-                    val resultList = ArrayList<Note>()
-                    for (row in noteList) {
-                        row.title?.let {
-                            if (it.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(Locale.ROOT))) {
-                                resultList.add(row)
-                            }
-                        }
-                    }
-                    noteFilterList = resultList
-                }
-                val filterResults = FilterResults()
-                filterResults.values = noteFilterList
-                return filterResults
-            }
+    inner class GenreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val genreNameTextView: TextView = itemView.findViewById(R.id.cardImage)
+        private val genreImageView: ImageView = itemView.findViewById(R.id.cardTitle)
 
-            @Suppress("UNCHECKED_CAST")
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                noteFilterList = results?.values as? MutableList<Note> ?: mutableListOf()
-                notifyDataSetChanged()
+        fun bind(genre: GenreData) {
+            if (!genre.picture_medium.isNullOrEmpty() && !genre.name.isNullOrEmpty() && !genre.type.isNullOrEmpty()) {
+                genreNameTextView.text = genre.name
+
+                // Load image using a library like Glide or Picasso
+                Glide.with(itemView.context)
+                    .load(genre.picture_medium)
+                    .into(genreImageView)
             }
         }
     }
 
-}*/
+    interface OnItemClickListener {
+        fun onItemClick(genre: GenreData)
+    }
+}
+
+

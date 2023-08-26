@@ -6,27 +6,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.deezerapp.R
+import com.example.deezerapp.databinding.FragmentAlbumBinding
 
 class AlbumFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = AlbumFragment()
-    }
 
-    private lateinit var viewModel: AlbumViewModel
+    private val viewModel by viewModels<AlbumViewModel>()
+    private lateinit var binding:FragmentAlbumBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_album, container, false)
+        binding=FragmentAlbumBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AlbumViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view:View, savedInstanceState: Bundle?) {
+
     }
 
 }

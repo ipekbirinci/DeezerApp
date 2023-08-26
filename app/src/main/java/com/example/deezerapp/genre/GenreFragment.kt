@@ -6,27 +6,71 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.deezerapp.R
+import androidx.fragment.app.viewModels
+import com.example.deezerapp.databinding.FragmentGenreBinding
+
 
 class GenreFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = GenreFragment()
-    }
 
-    private lateinit var viewModel: GenreViewModel
+    private val viewModel by viewModels<GenreViewModel>()
+    private lateinit var  binding: FragmentGenreBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_genre, container, false)
+
+       // binding = FragmentDetailBinding.inflate(inflater, container, false)
+       // return binding.root
+        binding=FragmentGenreBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(GenreViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view:View, savedInstanceState: Bundle?) {
+
+
+
     }
+
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
